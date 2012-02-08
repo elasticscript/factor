@@ -38,8 +38,11 @@ public class CallableActor<T> extends Actor<T> {
     private final MessageCallable<T> cb;
     
     public CallableActor(
-            MessageCallable<T> cb, Registry channel, URI address) {
-        super(channel, address);
+            MessageCallable<T> cb, 
+            Registry channel, 
+            URI address, 
+            DispatcherFactory f) {
+        super(channel, address, f);
         this.cb = cb;
     }
     

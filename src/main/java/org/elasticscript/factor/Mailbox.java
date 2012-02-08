@@ -26,14 +26,14 @@
 package org.elasticscript.factor;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * TODO: Dispatcher must be extended to support remote
- */ 
+
 class Mailbox implements FJMBean {
     private final FJPool fjpool;
+    private final DispatcherFactory factory;
     
-    public Mailbox(String name) {
-        fjpool = new FJPool(name);
+    public Mailbox(String name, DispatcherFactory factory) {
+        this.fjpool = new FJPool(name);
+        this.factory = factory;
     }
     
     public void shutdown() {
@@ -41,7 +41,7 @@ class Mailbox implements FJMBean {
     }
     
     public void submit(Actor a, Message m) {
-        fjpool.submit(Dispatcher.newDispatcher(a, m));
+        fjpool.submit(factory.newDispatcher(a, m));
     }
     
     final FJPool getPool() {

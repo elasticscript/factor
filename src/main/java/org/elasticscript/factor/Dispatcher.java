@@ -30,10 +30,5 @@ import jsr166y.RecursiveAction;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 public abstract class Dispatcher extends RecursiveAction {
-     public static Dispatcher newDispatcher(Actor target, Message msg) {
-         if (msg.getTo().getScheme().toLowerCase().equals("vm"))
-             return new VMDispatcher(target, msg);
-         
-         throw new RuntimeException("Scheme not supported!");
-     }  
+     // marker
 }

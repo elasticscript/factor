@@ -31,13 +31,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
 import org.elasticscript.factor.Actor;
 import org.elasticscript.factor.Registry;
 import org.elasticscript.factor.Message;
 import org.elasticscript.factor.MessageCallable;
 import org.elasticscript.factor.MessageReducer;
 import org.elasticscript.factor.PooledActor;
+import org.elasticscript.factor.VMDispatcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -88,7 +88,7 @@ public class PooledActorTest {
             }
         };
         
-        r.register(new PooledActor<String>(l, reducer, r, address, 5));
+        r.register(new PooledActor<String>(l, reducer, r, address, new VMDispatcher.Factory(), 5));
     }
     
     @After

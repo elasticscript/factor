@@ -85,11 +85,11 @@ abstract public class Actor<T> implements ActorMBean {
         }
     }
     
-    public Actor(Registry registry, URI address) {
+    public Actor(Registry registry, URI address, DispatcherFactory f) {
         this.registry = registry;
         this.address = address;
         this.mailbox = new Mailbox(
-                "mailbox-" + address.toASCIIString().replaceFirst("://", "."));
+            "mailbox-" + address.toASCIIString().replaceFirst("://", "."), f);
     }
     
     public void tell(Message<T> msg) {

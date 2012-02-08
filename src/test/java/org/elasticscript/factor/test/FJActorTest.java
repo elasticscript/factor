@@ -37,6 +37,7 @@ import org.elasticscript.factor.FJActor;
 import org.elasticscript.factor.Message;
 import org.elasticscript.factor.MessageCallable;
 import org.elasticscript.factor.MessageReducer;
+import org.elasticscript.factor.VMDispatcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,7 +84,7 @@ public class FJActorTest {
             }
         };
         
-        r.register(new FJActor<String>(l, reducer, r, address));
+        r.register(new FJActor<String>(l, reducer, r, address, new VMDispatcher.Factory()));
     }
     
     @After

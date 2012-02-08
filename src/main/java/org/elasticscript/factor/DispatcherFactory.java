@@ -25,40 +25,8 @@
  */
 package org.elasticscript.factor;
 
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-public class VMDispatcher extends Dispatcher {
-    private static final Logger log = 
-            LoggerFactory.getLogger(VMDispatcher.class);
-    
-    private final Actor target;
-    private final Message msg;
-
-    public static class Factory implements DispatcherFactory {
-        @Override
-        public Dispatcher newDispatcher(Actor target, Message msg) {
-            if (msg.getTo().getScheme().toLowerCase().equals("vm"))
-                return new VMDispatcher(target, msg);
-         
-            throw new RuntimeException("Scheme not supported!");
-        }
-    }
-    
-    VMDispatcher(Actor target, Message msg) {
-        this.target = target;
-        this.msg = msg;
-    }
-
-    @Override
-    public void compute() {
-        try {
-            target.dispatch(msg);
-        } 
-        catch (Exception ex) {
-            log.error(ex.getMessage(), ex);
-        }
-    }
+public interface DispatcherFactory {
+    public Dispatcher newDispatcher(Actor target, Message msg);
 }

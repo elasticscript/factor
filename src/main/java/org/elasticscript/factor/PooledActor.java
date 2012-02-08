@@ -45,12 +45,13 @@ final public class PooledActor<T> extends Actor<T> {
             MessageReducer<T> reducer, 
             Registry registry, 
             URI URI,
+            DispatcherFactory f,
             int count) {
-        super(registry, URI);
+        super(registry, URI, f);
         this.count = count;
         
         try {
-            createPool(cbl, reducer);
+            createPool(cbl, reducer, f);
         } 
         catch (URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -61,11 +62,12 @@ final public class PooledActor<T> extends Actor<T> {
             MessageCallable<T> cb, 
             Registry registry, 
             URI URI,
+            DispatcherFactory f,
             int count) {
-        super(registry, URI);
+        super(registry, URI, f);
         this.count = count;
         try {
-            createPool(cb);
+            createPool(cb, f);
         } 
         catch (URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -102,25 +104,28 @@ final public class PooledActor<T> extends Actor<T> {
     
     private void createPool(
             List<MessageCallable<T>> cbl, 
-            MessageReducer<T> reducer) throws URISyntaxException {
+            MessageReducer<T> reducer, 
+            DispatcherFactory f) throws URISyntaxException {
         Registry r = getRegistry();
         Actor a;
         URI addr;
         for (long i = 0; i < count; ++i) {
             addr = new URI(getAddress().toASCIIString() + "/" + i);
-            a = new FJActor(cbl, reducer, r, addr);
+            a = new FJActor(cbl, reducer, r, addr, f);
             r.register(a);
             actors.put(i, addr);
         }
     }
 
-    private void createPool(MessageCallable<T> cb) throws URISyntaxException {
+    private void createPool(
+            MessageCallable<T> cb,
+            DispatcherFactory f) throws URISyntaxException {
         Registry r = getRegistry();
         Actor a;
         URI addr;
         for (long i = 0; i < count; ++i) {
             addr = new URI(getAddress().toASCIIString() + "/" + i);
-            a = new CallableActor(cb, r, addr);
+            a = new CallableActor(cb, r, addr, f);
             r.register(a);
             actors.put(i, addr);
         }

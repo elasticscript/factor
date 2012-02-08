@@ -35,6 +35,7 @@ import org.elasticscript.factor.CallableActor;
 import org.elasticscript.factor.Registry;
 import org.elasticscript.factor.Message;
 import org.elasticscript.factor.MessageCallable;
+import org.elasticscript.factor.VMDispatcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +64,7 @@ public class ActorTest {
                     System.out.println("--- Msg: " + msg);
                     return null;
                 }
-            }, r, address);
+            }, r, address, new VMDispatcher.Factory());
         
         r.register(a);
     }
@@ -74,6 +75,7 @@ public class ActorTest {
     }
     
     @Test
+    @SuppressWarnings("SleepWhileInLoop")
     public void test() throws InterruptedException {
         System.out.println("----------------------- ActorTest ---------------------");
         List<String> list = new ArrayList<String>();

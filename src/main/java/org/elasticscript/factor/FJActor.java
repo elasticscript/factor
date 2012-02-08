@@ -45,8 +45,10 @@ public class FJActor<T> extends Actor<T> {
     public FJActor(
             List<MessageCallable<T>> cbl, 
             MessageReducer<T> reducer, 
-            Registry channel, URI address) {
-        super(channel, address);
+            Registry channel, 
+            URI address, 
+            DispatcherFactory f) {
+        super(channel, address, f);
         this.cbl = cbl;
         this.reducer = reducer;
         this.fjpool = new FJPool(address.toASCIIString().replaceFirst("://", "."));
