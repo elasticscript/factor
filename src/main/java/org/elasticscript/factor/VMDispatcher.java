@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 public class VMDispatcher extends Dispatcher {
     private static final Logger log = 
             LoggerFactory.getLogger(VMDispatcher.class);
+    private static final long serialVersionUID = -4591328314129190562L;
     
     private final Actor target;
     private final Message msg;

@@ -30,5 +30,6 @@ import jsr166y.RecursiveAction;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 public abstract class Dispatcher extends RecursiveAction {
+    private static final long serialVersionUID = 434921275078325505L;
      // marker
 }
